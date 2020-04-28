@@ -42,8 +42,8 @@ const getWinner = (
     : (cChoice === ROCK && pChoice === PAPER) ||
       (cChoice === PAPER && pChoice === SCISSORS) ||
       (cChoice === SCISSORS && pChoice === ROCK)
-    ? RESULT_PLAYER_WINS
-    : RESULT_COMPUTER_WINS;
+      ? RESULT_PLAYER_WINS
+      : RESULT_COMPUTER_WINS;
 
 // if (cChoice === pChoice) {
 //   return RESULT_DRAW;
@@ -83,3 +83,70 @@ startGameBtn.addEventListener('click', () => {
   alert(message);
   gameIsRunning = false;
 });
+
+
+// not related to game above
+
+const sumUp = (callback, ...numbers) => {
+  const validateNumber = (number) => {
+    return isNaN(number) ? 0 : number;
+  };
+
+  let sum = 0;
+  for (const num of numbers) {
+    sum += validateNumber(num);
+  }
+  callback(sum);
+};
+
+// Before ES6 - arguments
+// const substract = function () {
+//   let sum = 0;
+//   for (const num of arguments) {
+//     sum -= num;
+//   }
+//   return sum;
+// }
+
+const substractUp = function (callback, ...numbers) {
+  let sum = 0;
+  for (const num of numbers) {
+    sum -= num;
+  }
+  callback(sum);
+}
+
+const combine = (callback, operator, ...numbers) => {
+  const validateNumber = (number) => {
+    return isNaN(number) ? 0 : number;
+  };
+
+  let sum = 0;
+  for (const num of numbers) {
+    if (operator === 'ADD') {
+      sum += validateNumber(num);
+    }
+    else if (operator === 'SUBSTRACT') {
+      sum -= validateNumber(num);
+    }
+  }
+  callback(sum);
+};
+
+const showResult = (messageText, result) => {
+  alert(messageText + result);
+};
+
+const showResultSimple = (result) => {
+  alert('The result: ' + result);
+};
+
+sumUp(showResultSimple, 1, 5, 'a', 3, 123, 3, 3, 100);
+substractUp(showResultSimple, 1, 5, 3, 123, 3, 3, 100);
+
+combine(
+  showResult.bind(this, 'The result after adding all numbers is: '),
+  'ADD', 1, 5, 'a', 3, 123, 3, 3, 100);
+combine(
+  showResult.bind(this, 'The result after substracting all numbers is: '),
+  'SUBSTRACT', 1, 5, 'a', 3, 123, 3, 3, 100);
